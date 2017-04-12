@@ -15,6 +15,14 @@ namespace OnlineShop.Controllers
     {
         private ShopDbContext db = new ShopDbContext();
 
+        private bool isUserAuthorizedToEdit(Car car)
+        {
+            bool isAdmin = this.User.IsInRole("Admin");
+           
+
+            return isAdmin ;
+        }
+
         // GET: Cars
         public ActionResult Index()
         {
@@ -38,6 +46,7 @@ namespace OnlineShop.Controllers
         }
 
         // GET: Cars/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.BuyerId = new SelectList(db.Users, "Id", "FirstName");
@@ -46,7 +55,9 @@ namespace OnlineShop.Controllers
 
         // POST: Cars/Create
         
+        
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Make,Model,Price,Year,DateAdded,Image,BuyerId")] Car car,
             HttpPostedFileBase file)
@@ -71,6 +82,7 @@ namespace OnlineShop.Controllers
         }
 
         // GET: Cars/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,6 +90,12 @@ namespace OnlineShop.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Car car = db.Cars.Find(id);
+
+            if (!isUserAuthorizedToEdit(car))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
             if (car == null)
             {
                 return HttpNotFound();
@@ -89,6 +107,7 @@ namespace OnlineShop.Controllers
         // POST: Cars/Edit/5
         
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Make,Model,Price,Year,DateAdded,Image,BuyerId")] Car car,
             HttpPostedFileBase file)
@@ -113,6 +132,7 @@ namespace OnlineShop.Controllers
         }
 
         // GET: Cars/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -120,6 +140,12 @@ namespace OnlineShop.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Car car = db.Cars.Find(id);
+
+            if (! isUserAuthorizedToEdit(car))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
             if (car == null)
             {
                 return HttpNotFound();
@@ -129,6 +155,7 @@ namespace OnlineShop.Controllers
 
         // POST: Cars/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

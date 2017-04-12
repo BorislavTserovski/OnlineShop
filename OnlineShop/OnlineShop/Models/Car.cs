@@ -9,6 +9,8 @@ namespace OnlineShop.Models
 {
     public class Car
     {
+       
+
         [Key]
         public int Id { get; set; }
 
@@ -32,6 +34,10 @@ namespace OnlineShop.Models
         public string BuyerId { get; set; }
 
         public ApplicationUser Buyer { get; set; }
+
+        
+
+      
 
 
     }
