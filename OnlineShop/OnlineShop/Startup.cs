@@ -1,5 +1,8 @@
-﻿using Microsoft.Owin;
+﻿using OnlineShop.Migrations;
+using OnlineShop.Models;
+using Microsoft.Owin;
 using Owin;
+using System.Data.Entity;
 
 [assembly: OwinStartupAttribute(typeof(OnlineShop.Startup))]
 namespace OnlineShop
@@ -8,6 +11,8 @@ namespace OnlineShop
     {
         public void Configuration(IAppBuilder app)
         {
+            Database.SetInitializer(
+                new MigrateDatabaseToLatestVersion<ShopDbContext, Configuration>());
             ConfigureAuth(app);
         }
     }
