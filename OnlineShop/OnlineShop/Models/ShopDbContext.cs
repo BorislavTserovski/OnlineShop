@@ -13,10 +13,15 @@ namespace OnlineShop.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+        public virtual IDbSet<Car> Cars { get; set; }
+
+        
 
         public static ShopDbContext Create()
         {
             return new ShopDbContext();
         }
+
+       
     }
 }
