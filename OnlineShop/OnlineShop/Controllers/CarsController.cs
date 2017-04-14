@@ -30,6 +30,7 @@ namespace OnlineShop.Controllers
             return View(cars.ToList());
         }
 
+
         // GET: Cars/Details/5
         public ActionResult Details(int? id)
         {
