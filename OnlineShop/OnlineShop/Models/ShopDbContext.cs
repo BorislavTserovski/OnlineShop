@@ -15,7 +15,9 @@ namespace OnlineShop.Models
         }
         public virtual IDbSet<Car> Cars { get; set; }
 
-        
+        public virtual IDbSet<Category> Categories { get; set; }
+
+
 
         public static ShopDbContext Create()
         {
