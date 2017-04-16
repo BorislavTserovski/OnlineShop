@@ -9,7 +9,7 @@ namespace OnlineShop.Models
 {
     public class Car
     {
-       
+
 
         [Key]
         public int Id { get; set; }
@@ -24,7 +24,7 @@ namespace OnlineShop.Models
         public decimal Price { get; set; }
 
         [Required]
-        public int Year   { get; set; }
+        public int Year { get; set; }
 
         public DateTime DateAdded { get; set; }
 
@@ -35,9 +35,9 @@ namespace OnlineShop.Models
 
         public ApplicationUser Buyer { get; set; }
 
-        
 
-      
+
+
 
 
     }

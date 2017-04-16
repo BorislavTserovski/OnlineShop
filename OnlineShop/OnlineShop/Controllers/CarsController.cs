@@ -18,9 +18,9 @@ namespace OnlineShop.Controllers
         private bool isUserAuthorizedToEdit(Car car)
         {
             bool isAdmin = this.User.IsInRole("Admin");
-           
 
-            return isAdmin ;
+
+            return isAdmin;
         }
 
         // GET: Cars
@@ -55,8 +55,8 @@ namespace OnlineShop.Controllers
         }
 
         // POST: Cars/Create
-        
-        
+
+
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -66,13 +66,13 @@ namespace OnlineShop.Controllers
             if (ModelState.IsValid)
             {
                 using (MemoryStream ms = new MemoryStream())
-                    if (file!= null)
+                    if (file != null)
                     {
                         file.InputStream.CopyTo(ms);
                         byte[] array = ms.GetBuffer();
                         car.Image = array;
                     }
-               
+
                 db.Cars.Add(car);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -106,7 +106,7 @@ namespace OnlineShop.Controllers
         }
 
         // POST: Cars/Edit/5
-        
+
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -115,7 +115,7 @@ namespace OnlineShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (file!=null)
+                if (file != null)
                 {
                     using (MemoryStream ms = new MemoryStream())
                     {
@@ -142,7 +142,7 @@ namespace OnlineShop.Controllers
             }
             Car car = db.Cars.Find(id);
 
-            if (! isUserAuthorizedToEdit(car))
+            if (!isUserAuthorizedToEdit(car))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
