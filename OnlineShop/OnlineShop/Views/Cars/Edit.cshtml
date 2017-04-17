@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Edit a Car</h2>
 
 
 @using (Html.BeginForm("Edit", "Cars", FormMethod.Post,
@@ -13,7 +13,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Car</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -51,13 +51,7 @@
         </div>
        
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.DateAdded, htmlAttributes: new { @class = "control-label col-sm-4" })
-                <div class="col-sm-4">
-                    @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "text-danger" })
-                </div>
-            </div>
+           
         <div class="form-group">
             @Html.LabelFor(m => m.CategoryId, new { @class = "control-label col-sm-4" })
             <div class="dropdown col-sm-4">
@@ -79,7 +73,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-4">
-                    <input type="submit" value="Save" class="btn btn-default" />
+                    <input type="submit" value="Save" class="btn btn-success" />
                 </div>
             </div>
         </div>

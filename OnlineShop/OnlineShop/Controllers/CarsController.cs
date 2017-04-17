@@ -81,8 +81,8 @@ namespace OnlineShop.Controllers
                         byte[] array = ms.GetBuffer();
                         car.Image = array;
                     }
-               
 
+                car.DateAdded = DateTime.Now;
                 db.Cars.Add(car);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -115,6 +115,7 @@ namespace OnlineShop.Controllers
                 .OrderBy(c => c.Name)
                 .ToList();
             ViewBag.BuyerId = new SelectList(db.Users, "Id", "FirstName", car.BuyerId);
+            
             return View(car);
         }
 
@@ -136,7 +137,7 @@ namespace OnlineShop.Controllers
                         byte[] array = ms.GetBuffer();
                         car.Image = array;
                     }
-                   
+                    car.DateAdded = DateTime.Now;
                 }
                 db.Entry(car).State = EntityState.Modified;
                 db.SaveChanges();

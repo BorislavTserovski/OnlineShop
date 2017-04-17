@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -29,6 +30,10 @@ namespace OnlineShop.Models
         [Required]
         public int Year { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayName("Date Added")]
+        [DisplayFormat(DataFormatString ="{0:d}")]
+        [Column(TypeName = "datetime2")]
         public DateTime DateAdded { get; set; }
 
         public byte[] Image { get; set; }
