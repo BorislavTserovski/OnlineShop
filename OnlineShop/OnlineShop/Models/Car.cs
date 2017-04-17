@@ -9,7 +9,10 @@ namespace OnlineShop.Models
 {
     public class Car
     {
-
+        public Car()
+        {
+            this.Categories = new HashSet<Category>();
+        }
 
         [Key]
         public int Id { get; set; }
@@ -35,7 +38,12 @@ namespace OnlineShop.Models
 
         public ApplicationUser Buyer { get; set; }
 
+        
+        public int CategoryId { get; set; }
 
+        public virtual Category Category { get; set; }
+
+        public virtual ICollection<Category> Categories { get; set; }
 
 
 

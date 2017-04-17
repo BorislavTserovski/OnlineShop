@@ -51,7 +51,16 @@ namespace OnlineShop.Controllers
         public ActionResult Create()
         {
             ViewBag.BuyerId = new SelectList(db.Users, "Id", "FirstName");
-            return View();
+            using (db)
+            {
+                var model = new Car();
+                model.Categories = db.Categories
+                    .OrderBy(c => c.Name)
+                    .ToList();
+
+                return View(model);
+            }
+          
         }
 
         // POST: Cars/Create
@@ -60,7 +69,7 @@ namespace OnlineShop.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Make,Model,Price,Year,DateAdded,Image,BuyerId")] Car car,
+        public ActionResult Create([Bind(Include = "Id,Make,Model,Price,Year,DateAdded,Image,CategoryId")] Car car,
             HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
@@ -72,6 +81,7 @@ namespace OnlineShop.Controllers
                         byte[] array = ms.GetBuffer();
                         car.Image = array;
                     }
+               
 
                 db.Cars.Add(car);
                 db.SaveChanges();
@@ -101,6 +111,9 @@ namespace OnlineShop.Controllers
             {
                 return HttpNotFound();
             }
+            car.Categories = db.Categories
+                .OrderBy(c => c.Name)
+                .ToList();
             ViewBag.BuyerId = new SelectList(db.Users, "Id", "FirstName", car.BuyerId);
             return View(car);
         }
@@ -110,7 +123,7 @@ namespace OnlineShop.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Make,Model,Price,Year,DateAdded,Image,BuyerId")] Car car,
+        public ActionResult Edit([Bind(Include = "Id,Make,Model,Price,Year,DateAdded,Image,CategoryId")] Car car,
             HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
@@ -123,6 +136,7 @@ namespace OnlineShop.Controllers
                         byte[] array = ms.GetBuffer();
                         car.Image = array;
                     }
+                   
                 }
                 db.Entry(car).State = EntityState.Modified;
                 db.SaveChanges();
