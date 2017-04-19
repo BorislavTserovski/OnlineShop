@@ -19,6 +19,7 @@ namespace OnlineShop.Models
         [Key]
         public int Id { get; set; }
 
+
         [Required]
         [Index(IsUnique =true)]
         [StringLength(50)]
