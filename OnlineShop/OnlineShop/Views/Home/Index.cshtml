@@ -3,7 +3,8 @@
 @{
     ViewBag.Title = "Home";
 }
-<body class="HomeBg">
+<body class="BG">
+  
 </body>
 
 @foreach (var car in Model)
@@ -14,9 +15,6 @@
             <h2>@car.Make @car.Model</h2>
             <div class="about">
                 Posted on <i>@car.DateAdded.ToString("d")</i>
-
-
-
 
                 <div>
                     @if (car.Image != null)
@@ -34,3 +32,4 @@
             @Html.ActionLink("Details", "Details", "Cars", new { id = car.Id }, new { @class = "btn btn-info" })
         </div>
 }
+

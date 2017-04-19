@@ -6,3 +6,16 @@
     border:solid;
     border-color:black;
 }
+.Brand{
+    color:white;
+    text-shadow:2px 2px 4px black;
+    font-family:'Freestyle Script';
+    font-size:40px;
+
+}
+.BG{
+    background: url(images/BG.jpg) no-repeat center fixed;
+    background-size:cover;
+    padding-top: 10px;
+    padding-bottom:20px;
+}

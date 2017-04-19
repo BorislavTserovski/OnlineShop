@@ -29,7 +29,11 @@ namespace MVCBlog.Controllers
                 var category = db.Categories.First(c => c.Name.Contains(search));
                 return View(db.Cars.Where(c => c.CategoryId==category.Id).ToList());
             }
-             var recipes = db.Cars
+            else if (Searchby == "Year")
+            {
+                return View(db.Cars.Where(x => x.Year.ToString()==search).ToList());
+            }
+            var recipes = db.Cars
               .OrderByDescending(p => p.DateAdded).Take(3);
 
              return View(recipes.ToList());

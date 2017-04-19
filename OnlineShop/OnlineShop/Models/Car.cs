@@ -38,15 +38,13 @@ namespace OnlineShop.Models
 
         public byte[] Image { get; set; }
 
-        [ForeignKey("Buyer")]
-        public string BuyerId { get; set; }
+        [ForeignKey("Owner")]
+        public string OwnerId { get; set; }
 
-        public ApplicationUser Buyer { get; set; }
+        public ApplicationUser Owner { get; set; }
 
         [DisplayName("Category")]
         public int CategoryId { get; set; }
-
-      //  public virtual Category Category { get; set; }
 
         public virtual ICollection<Category> Categories { get; set; }
 

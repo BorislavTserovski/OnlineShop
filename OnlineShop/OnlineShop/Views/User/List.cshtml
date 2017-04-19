@@ -25,8 +25,8 @@
                         <td>@user.Id</td>
                         <td>@user.Email</td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", "User", new { @id = user.Id }, null)
-                            @Html.ActionLink("Delete", "Delete", "User", new { @id = user.Id }, null)
+                            @Html.ActionLink("Edit", "Edit", "User", new { @id = user.Id }, new { @class = "btn btn-info" })
+                            @Html.ActionLink("Delete", "Delete", "User", new { @id = user.Id }, new { @class = "btn btn-danger" })
                         </td>
                     </tr>
                 }

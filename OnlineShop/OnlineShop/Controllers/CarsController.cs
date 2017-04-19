@@ -26,7 +26,7 @@ namespace OnlineShop.Controllers
         // GET: Cars
         public ActionResult Index()
         {
-            var cars = db.Cars.Include(c => c.Buyer);
+            var cars = db.Cars.Include(c => c.Owner);
             return View(cars.ToList());
         }
 
@@ -50,7 +50,7 @@ namespace OnlineShop.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            ViewBag.BuyerId = new SelectList(db.Users, "Id", "FirstName");
+            ViewBag.OwnerId = new SelectList(db.Users, "Id", "FirstName");
             using (db)
             {
                 var model = new Car();
@@ -69,7 +69,7 @@ namespace OnlineShop.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Make,Model,Price,Year,DateAdded,Image,CategoryId")] Car car,
+        public ActionResult Create([Bind(Include = "Id,Make,Model,Price,Year,DateAdded,Image,CategoryId,OwnerId")] Car car,
             HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
@@ -81,14 +81,18 @@ namespace OnlineShop.Controllers
                         byte[] array = ms.GetBuffer();
                         car.Image = array;
                     }
-
+                var ownerId = db.Users
+                   .Where(u => u.UserName == this.User.Identity.Name)
+                   .First()
+                   .Id;
+                car.OwnerId = ownerId;
                 car.DateAdded = DateTime.Now;
                 db.Cars.Add(car);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.BuyerId = new SelectList(db.Users, "Id", "FirstName", car.BuyerId);
+            ViewBag.OwnerId = new SelectList(db.Users, "Id", "FirstName", car.OwnerId);
             return View(car);
         }
 
@@ -114,7 +118,7 @@ namespace OnlineShop.Controllers
             car.Categories = db.Categories
                 .OrderBy(c => c.Name)
                 .ToList();
-            ViewBag.BuyerId = new SelectList(db.Users, "Id", "FirstName", car.BuyerId);
+            ViewBag.OwnerId = new SelectList(db.Users, "Id", "FirstName", car.OwnerId);
             
             return View(car);
         }
@@ -124,7 +128,7 @@ namespace OnlineShop.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Make,Model,Price,Year,DateAdded,Image,CategoryId")] Car car,
+        public ActionResult Edit([Bind(Include = "Id,Make,Model,Price,Year,DateAdded,Image,CategoryId,OwnerId")] Car car,
             HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
@@ -137,13 +141,19 @@ namespace OnlineShop.Controllers
                         byte[] array = ms.GetBuffer();
                         car.Image = array;
                     }
+                    var ownerId = db.Users
+                  .Where(u => u.UserName == this.User.Identity.Name)
+                  .First()
+                  .Id;
+                    car.OwnerId = ownerId;
                     car.DateAdded = DateTime.Now;
+                   
                 }
                 db.Entry(car).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.BuyerId = new SelectList(db.Users, "Id", "FirstName", car.BuyerId);
+            ViewBag.OwnerId = new SelectList(db.Users, "Id", "FirstName", car.OwnerId);
             return View(car);
         }
 

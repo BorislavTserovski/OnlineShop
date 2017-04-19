@@ -11,15 +11,19 @@
         <b>Search by : </b>@Html.RadioButton("Searchby", "Make",true)<text> Make</text>
         @Html.RadioButton("Searchby", "Model")<text> Model</text>
         @Html.RadioButton("Searchby", "Category")<text> Category</text>
+        @Html.RadioButton("Searchby", "Year")<text> Year</text>
         @Html.TextBox("search")<input type="submit" value="Search"/>
     }
 </p>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create new", "Create")
 </p>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Owner)
+        </th>
        
         <th>
             @Html.DisplayNameFor(model => model.Make)
@@ -33,9 +37,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Year)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateAdded)
-        </th>
+        
         <th>
             @Html.DisplayNameFor(model => model.Image)
         </th>
@@ -44,6 +46,9 @@
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Owner.Email)
+        </td>
      
         <td>
             @Html.DisplayFor(modelItem => item.Make)
@@ -57,9 +62,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Year)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateAdded)
-        </td>
+       
         <td>
             @if (item.Image != null)
             {
@@ -69,13 +72,14 @@
         <td>
           @if (User.IsInRole("Admin"))
           { 
-              @Html.ActionLink("Edit | ", "Edit", new { id=item.Id })
-            
-              @Html.ActionLink("Delete | ", "Delete", new { id=item.Id })
+              @Html.ActionLink("Edit  ", "Edit", new { id=item.Id },new { @class = "btn btn-info" })
+             
+              @Html.ActionLink("Delete  ", "Delete", new { id=item.Id },new { @class = "btn btn-danger" })
           }
-              @Html.ActionLink("Details", "Details", new { id = item.Id })
+              @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-warning"})
         </td>
     </tr>
 }
 
 </table>
+
